@@ -1,0 +1,20 @@
+#:import random random
+
+<HomePage>:
+    orientation: 'vertical'
+
+    TextInput:
+        id: my_txt
+        fonst_size: 40
+        size_hint_y: None
+        height: 200
+        text: 'Hello Boo'
+        on_text: my_label.color = [random.random() for i in range(3)] + [1]
+
+    FloatLayout:
+        Scatter:
+            Label:
+                id: my_label
+                text: my_txt.text
+                font_size: 40
+                color:
