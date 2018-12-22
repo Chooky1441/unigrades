@@ -1,0 +1,27 @@
+<Widget>:
+    font_name: '../res/roboto'
+
+<HomeScreen@Screen>:
+    name: 'home_screen'
+
+    BoxLayout:
+        name: 'root_box'
+        orientation: 'vertical'
+
+        BoxLayout:
+            name: 'toolbar'
+            size_hint_y: 0.1
+            orientation: 'horizontal'
+
+            Button:
+                text: '---'
+                size_hint_x: 0.1
+
+            Label:
+                text: 'Schedules'
+
+
+        BoxLayout:
+            Button:
+                text: 'Create a Schedule'
+                on_release: root.launch_create_schedule()

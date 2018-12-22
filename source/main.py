@@ -1,13 +1,26 @@
-import course
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager
+from kivy.lang import Builder
 
-class UniGrades():
-    def __init__(self):
-        c1 = course.Category('Exams', 100)
-        a1 = course.Assignemnt('Final', 90, 100, c1)
-        co = course.CutPointSet()
-        c = course.Course('ICS 46', 4, co, [c1], [a1])
-        print(c)
+import home_screen
+import create_schedule
 
+Builder.load_string('''
+#: include home_screen.kv
+#: include create_schedule.kv
+
+<MainScreen>:
+
+    HomeScreen:
+    CreateSchedule:
+''')
+
+class UniGrades(App):
+    def build(self):
+        return MainScreen()
+
+class MainScreen(ScreenManager):
+    home_screen = home_screen.HomeScreen()
 
 if __name__ == '__main__':
-    UniGrades()
+    UniGrades().run()

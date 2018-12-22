@@ -1,0 +1,45 @@
+<CreateSchedule@Screen>:
+    name: 'create_schedule'
+
+    BoxLayout:
+        name: 'root_box'
+        orientation: 'vertical'
+
+        BoxLayout:
+            name: 'toolbar'
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+
+            Button:
+                text: '<--'
+                on_release: root.back()
+                size_hint_x: 0.1
+
+            Label:
+                text: 'Create a Schedule'
+
+            Button:
+                text: '---'
+                size_hint_x: 0.1
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.5
+            size_hint_x: 0.85
+
+            Label:
+                text: 'Name'
+            TextInput:
+                multiline: False
+
+            Label:
+                text: 'Current G.P.A.'
+            TextInput:
+                multiline: False
+
+            Label:
+                text: 'Total units taken'
+            TextInput:
+                multiline: False
+
+        BoxLayout:
