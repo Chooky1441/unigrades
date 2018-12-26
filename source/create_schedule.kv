@@ -1,11 +1,24 @@
+#:import utils utils
+
 <CreateSchedule@Screen>:
     name: 'create_schedule'
+    _name: text_name.text
+    _gpa: text_gpa.text
+    _units: text_units.text
 
     BoxLayout:
         name: 'root_box'
         orientation: 'vertical'
 
         BoxLayout:
+
+            canvas:
+                Color:
+                    rgba: utils.DG, utils.DG, utils.DG, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
             name: 'toolbar'
             orientation: 'horizontal'
             size_hint_y: 0.1
@@ -14,32 +27,65 @@
                 text: '<--'
                 on_release: root.back()
                 size_hint_x: 0.1
+                background_color: 0, 0, 0, 0
 
             Label:
                 text: 'Create a Schedule'
 
             Button:
-                text: '---'
+                text: '-->'
+                on_release: root.create()
                 size_hint_x: 0.1
+                background_color: 0, 0, 0, 0
 
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint_y: 0.5
-            size_hint_x: 0.85
+        FloatLayout:
+
+            canvas:
+                Color:
+                    rgba: utils.G, utils.G, utils.G, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
 
             Label:
                 text: 'Name'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.9}
             TextInput:
+                id: text_name
+                text: root._name
                 multiline: False
+                size_hint: (0.9, 0.063)
+                pos_hint: {'x': 0.05, 'y': 0.86}
 
             Label:
                 text: 'Current G.P.A.'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.72}
             TextInput:
+                id: text_gpa
+                text: root._gpa
                 multiline: False
+                size_hint: (0.9, 0.063)
+                pos_hint: {'x': 0.05, 'y': 0.68}
+                
 
             Label:
-                text: 'Total units taken'
+                text: 'Amount of units taken'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.54}
             TextInput:
+                id: text_units
+                text: root._units
                 multiline: False
-
-        BoxLayout:
+                size_hint: (0.9, 0.063)
+                pos_hint: {'x': 0.05, 'y': 0.50}
