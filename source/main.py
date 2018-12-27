@@ -8,7 +8,6 @@ import create_schedule
 Builder.load_string('''
 #: include home_screen.kv
 #: include create_schedule.kv
-
 <MainScreen>:
 
     HomeScreen:

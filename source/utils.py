@@ -2,6 +2,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.lang.builder import Builder
 
 DG = 0.13
 G = 0.18
@@ -17,7 +18,8 @@ def to_gpa(grade: str) -> float:
 
 def default_popup(text: str) -> None:
     err_box = BoxLayout(orientation = 'vertical', padding = (10))
-    err_box.add_widget(Label(text = text))
+    err_txt = Label(text = text)
+    err_box.add_widget(err_txt)
     close_button = Button(text = "Close")
     err_box.add_widget(close_button)
     err = Popup(title = 'Warning', content = err_box, size_hint = (0.6, 0.4))

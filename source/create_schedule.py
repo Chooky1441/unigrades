@@ -15,7 +15,7 @@ class CreateSchedule(Screen):
         self._units = ''
 
     def back(self) -> None:
-
+        
         def slide_back():
             self.parent.transition = SlideTransition(direction = 'right', duration = utils.DEFAULT_TRANSITION_LENGTH)
             self.parent.current = 'home_screen'

@@ -1,27 +1,90 @@
+#:import utils utils
+
 <Widget>:
     font_name: '../res/roboto'
 
 <HomeScreen@Screen>:
     name: 'home_screen'
 
-    BoxLayout:
-        name: 'root_box'
-        orientation: 'vertical'
+    NavigationDrawer:
 
-        BoxLayout:
-            name: 'toolbar'
-            size_hint_y: 0.1
-            orientation: 'horizontal'
+        id: nav_drawer
+        FloatLayout:
 
-            Button:
-                text: '---'
-                size_hint_x: 0.1
+            canvas:
+                Color:
+                    rgba: utils.G, utils.G, utils.G, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
 
             Label:
-                text: 'Schedules'
+                text: 'UniGrades'
+                halign: 'left'
+                valign: 'middle'
+                underline: True
+                text_size: self.size
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.9}
+                font_size: self.height * 0.4
 
+            Button:
+                text: 'Create a new schedule'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.8}
+                background_color: 0, 0, 0, 0
+                on_release: root.launch_create_schedule()
+
+            Button:
+                text: 'About'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.7}
+                background_color: 0, 0, 0, 0
+                on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019')
 
         BoxLayout:
-            Button:
-                text: 'Create a Schedule'
-                on_release: root.launch_create_schedule()
+            name: 'root_box'
+            orientation: 'vertical'
+
+            BoxLayout:
+                name: 'toolbar'
+                size_hint_y: 0.1
+                orientation: 'horizontal'
+
+                canvas:
+                    Color:
+                        rgba: utils.DG, utils.DG, utils.DG, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Button:
+                    size_hint_x: 0.1
+                    on_release: nav_drawer.toggle_state()
+                    background_color: 0, 0, 0, 0
+                    Image:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        source: '../res/lines.png'
+
+                Label:
+                    text: 'Schedules'
+                    font_size: self.height * 0.5
+
+                Button:
+                    size_hint_x: 0.1
+                    background_color: 0, 0, 0, 0
+
+
+            BoxLayout:
+                Label:
+                    valign: 'top'
+                    text: 'You have no schedules.'

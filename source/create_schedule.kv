@@ -11,7 +11,6 @@
         orientation: 'vertical'
 
         BoxLayout:
-
             canvas:
                 Color:
                     rgba: utils.DG, utils.DG, utils.DG, 1
@@ -24,19 +23,28 @@
             size_hint_y: 0.1
 
             Button:
-                text: '<--'
-                on_release: root.back()
                 size_hint_x: 0.1
+                on_release: root.back()
                 background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: '../res/back_arrow.png'
 
             Label:
                 text: 'Create a Schedule'
+                font_size: self.height * 0.5
 
             Button:
-                text: '-->'
-                on_release: root.create()
                 size_hint_x: 0.1
+                on_release: root.create()
                 background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: '../res/enter.png'
+
+
 
         FloatLayout:
 
@@ -54,6 +62,7 @@
                 valign: 'middle'
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.9}
+                font_size: self.height * 0.3
             TextInput:
                 id: text_name
                 text: root._name
@@ -68,13 +77,14 @@
                 valign: 'middle'
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.72}
+                font_size: self.height * 0.3
             TextInput:
                 id: text_gpa
                 text: root._gpa
                 multiline: False
                 size_hint: (0.9, 0.063)
                 pos_hint: {'x': 0.05, 'y': 0.68}
-                
+
 
             Label:
                 text: 'Amount of units taken'
@@ -83,6 +93,7 @@
                 valign: 'middle'
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.54}
+                font_size: self.height * 0.3
             TextInput:
                 id: text_units
                 text: root._units
