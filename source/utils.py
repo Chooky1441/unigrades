@@ -16,13 +16,15 @@ def to_gpa(grade: str) -> float:
     """returns the gpa the student has based on the letter grade (4.0 scale)"""
     return TO_GPA[grade]
 
-def default_popup(text: str) -> None:
+def default_popup(text: str, title: str = 'Warning') -> None:
     err_box = BoxLayout(orientation = 'vertical', padding = (10))
-    err_txt = Label(text = text)
+
+    err_txt = Label(text = text, font_size = 15)
     err_box.add_widget(err_txt)
+
     close_button = Button(text = "Close")
     err_box.add_widget(close_button)
-    err = Popup(title = 'Warning', content = err_box, size_hint = (0.6, 0.4))
+    err = Popup(title = title, content = err_box, size_hint = (0.6, 0.4))
     close_button.bind(on_release = err.dismiss)
     err.open()
 

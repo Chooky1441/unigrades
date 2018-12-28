@@ -24,7 +24,7 @@ class Schedule:
             temp_gpa = self._add_one_course_to_gpa(c, temp_gpa)
         return temp_gpa
 
-    def _add_one_course_to_gpa(c: Course, gpa: float = self.current_gpa) -> float:
+    def _add_one_course_to_gpa(c: course.Course, gpa: float) -> float:
         """returns the gpa with one course added"""
         return gpa * (self.current_units / (self.current_units + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (self.current_units + c.units))
 
@@ -42,7 +42,7 @@ class Schedule:
     def complete_course(c: course.Course):
         """removes the course form the schedule aswell as adding re-calculating the schedule stats"""
         if c.p_np is False: # only add to the gpa if the course is not a pass no pass grade
-            self.current_gpa  = self._add_one_course_to_gpa(c)
+            self.current_gpa  = self._add_one_course_to_gpa(c, self.current_gpa)
         self.current_units += c.units
         self.projected_units -= c.units
         self.remove_course(c)

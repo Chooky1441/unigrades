@@ -6,16 +6,13 @@ class CreateSchedule(Screen):
 
     _name, _gpa, _units = StringProperty(), StringProperty(), StringProperty()
 
-    def __init__(self, **kwargs):
-        super(Screen, self).__init__(**kwargs)
-
     def _clear_text_fields(self):
         self._name = ''
         self._gpa = ''
         self._units = ''
 
     def back(self) -> None:
-        
+
         def slide_back():
             self.parent.transition = SlideTransition(direction = 'right', duration = utils.DEFAULT_TRANSITION_LENGTH)
             self.parent.current = 'home_screen'

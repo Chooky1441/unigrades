@@ -1,5 +1,10 @@
-from schedule import schedule
+from schedule import Schedule
 import json, pathlib
+
+def get_all_schedule_names() -> [str]:
+    """returns a list of all the name of the saved schedules"""
+    return sorted([dir.stem for dir in pathlib.Path('schedules').iterdir() if dir.is_file()])
+
 
 def get_schedule_dict(name: str) -> dict:
     """returns a dict with all the data for a schedule"""

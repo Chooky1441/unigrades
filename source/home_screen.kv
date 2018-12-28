@@ -48,10 +48,10 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.7}
                 background_color: 0, 0, 0, 0
-                on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019')
+                on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019', 'About')
 
         BoxLayout:
-            name: 'root_box'
+            id: root_box
             orientation: 'vertical'
 
             BoxLayout:
@@ -83,8 +83,17 @@
                     size_hint_x: 0.1
                     background_color: 0, 0, 0, 0
 
+            ScrollView:
+                size: self.size
+                canvas.before:
+                    Color:
+                        rgba: utils.G, utils.G, utils.G, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
 
-            BoxLayout:
-                Label:
-                    valign: 'top'
-                    text: 'You have no schedules.'
+                BoxLayout:
+                    id: sch_box
+                    size_hint_y: None
+                    orientation: 'vertical'
+                    height: 0
