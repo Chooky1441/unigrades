@@ -1,0 +1,3 @@
+title = UniGrades
+author = Anthony Navarrette
+orientation = portrait
