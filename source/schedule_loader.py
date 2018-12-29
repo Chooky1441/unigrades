@@ -1,4 +1,5 @@
 from schedule import Schedule
+import course
 import json, pathlib
 
 def get_all_schedule_names() -> [str]:
@@ -17,6 +18,10 @@ def get_schedule_dict(name: str) -> dict:
         with file as f:
             sch_dict = json.load(f)
         return sch_dict
+
+def to_schedule(d: dict) -> Schedule:
+    """converts the dict gotten from the json file into a schedule object"""
+    return Schedule('test', 3.50, 10, [])
 
 
 def save_schedule(schedule: Schedule) -> None:

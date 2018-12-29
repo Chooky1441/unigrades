@@ -3,6 +3,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
+from kivy.uix.screenmanager import SlideTransition
 
 DG = 0.13
 G = 0.18
@@ -15,6 +16,11 @@ TO_GPA = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2
 def to_gpa(grade: str) -> float:
     """returns the gpa the student has based on the letter grade (4.0 scale)"""
     return TO_GPA[grade]
+
+def switch_screen(self, screen_name: str, slide_dir: str) -> None:
+    """switches the screen to the given one"""
+    self.parent.transition = SlideTransition(direction = slide_dir, duration = DEFAULT_TRANSITION_LENGTH)
+    self.parent.current = screen_name
 
 def default_popup(text: str, title: str = 'Warning') -> None:
     err_box = BoxLayout(orientation = 'vertical', padding = (10))

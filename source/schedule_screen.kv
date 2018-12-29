@@ -1,0 +1,99 @@
+#: import utils utils
+
+<ScheduleScreen@Screen>:
+    name: 'schedule_screen'
+    NavigationDrawer:
+        id: schedule_nav_drawer
+        FloatLayout:
+            canvas:
+                Color:
+                    rgba: utils.G, utils.G, utils.G, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Label:
+                text: 'UniGrades'
+                halign: 'left'
+                valign: 'middle'
+                underline: True
+                text_size: self.size
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.9}
+                font_size: self.height * 0.4
+
+            Button:
+                text: 'Create a new schedule'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.8}
+                background_color: 0, 0, 0, 0
+
+
+            Button:
+                text: 'About'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.7}
+                background_color: 0, 0, 0, 0
+                on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019', 'About')
+
+        BoxLayout:
+            id: root_box
+            orientation: 'vertical'
+
+            BoxLayout:
+                name: 'toolbar'
+                size_hint_y: 0.1
+                orientation: 'horizontal'
+
+                canvas:
+                    Color:
+                        rgba: utils.DG, utils.DG, utils.DG, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Button:
+                    size_hint_x: 0.1
+                    on_release: schedule_nav_drawer.toggle_state()
+                    background_color: 0, 0, 0, 0
+                    Image:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        source: '../res/lines.png'
+
+                Label:
+                    id: schedule_name
+                    text: 'stuff here'
+                    font_size: self.height * 0.5
+
+                Button:
+                    size_hint_x: 0.1
+                    on_release: root.return_to_homescreen()
+                    background_color: 0, 0, 0, 0
+                    Image:
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        source: '../res/back_arrow.png'
+
+            ScrollView:
+                size: self.size
+                canvas.before:
+                    Color:
+                        rgba: utils.G, utils.G, utils.G, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                BoxLayout:
+                    id: sch_box
+                    size_hint_y: None
+                    orientation: 'vertical'
+                    height: 0

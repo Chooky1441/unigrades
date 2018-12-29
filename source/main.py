@@ -8,10 +8,13 @@ import create_schedule
 Builder.load_string('''
 #: include home_screen.kv
 #: include create_schedule.kv
+#: include schedule_screen.kv
+
 <MainScreen>:
 
     HomeScreen:
     CreateSchedule:
+    ScheduleScreen:
 ''')
 
 class UniGrades(App):
