@@ -81,7 +81,7 @@ class Assignment:
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing an assignment"""
         # used when saving as a json file
-        return {'name': self.name, 'pts_rec': self.pts_rec, 'pts_total': self.pts_total, 'category': self.category}
+        return {'name': self.name, 'pts_rec': self.pts_rec, 'pts_total': self.pts_total}
 
 
 class Category:
@@ -105,17 +105,17 @@ class Category:
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Cateogry"""
         # used when saving as a json file
-        return {'name':self.name, 'weight':self.weight}
+        return {'name':self.name, 'weight':self.weight, 'assignments': [a.to_dict() for a in self.assignemnts]}
 
 
 class Course:
 
-    def __init__(self, name: str, units: int, cutpointset : CutPointSet, categories: [Category], n_np: bool = False, grade: float = None):
+    def __init__(self, name: str, units: int, cutpointset : CutPointSet, categories: [Category], n_np: bool = False):
         self.name = name
         self.units = units
         self.cutpointset = cutpointset
         self.categories = categories
-        self.grade_ = grade
+        self.grade_ = self.grade()
         self.p_np = p_np        # 'pass no pass' is used if the student doesnt want a letter grade for the class
 
     # public functions
@@ -142,3 +142,7 @@ class Course:
     def grade(self) -> float:
         """calculates the grade a student has in the course"""
         return sum([c.grade() for c in self.categories])
+
+    def to_dict(self) -> dict:
+        """returns a dictionary with all of the data representing a Course"""
+        return {'name': self.name, 'units': self.units, 'cutpointset': self.cutpointset.to_dict(), 'categories': self.categories.to_dict(), 'p_np': self.p_np}

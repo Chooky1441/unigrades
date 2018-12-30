@@ -1,6 +1,6 @@
 #:import utils utils
 
-<CreateSchedule@Screen>:
+<CreateSchedule>:
     name: 'create_schedule'
     _name: text_name.text
     _gpa: text_gpa.text
@@ -11,16 +11,17 @@
         orientation: 'vertical'
 
         BoxLayout:
+
+            name: 'toolbar'
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+
             canvas:
                 Color:
                     rgba: utils.DG, utils.DG, utils.DG, 1
                 Rectangle:
                     size: self.size
                     pos: self.pos
-
-            name: 'toolbar'
-            orientation: 'horizontal'
-            size_hint_y: 0.1
 
             Button:
                 size_hint_x: 0.1

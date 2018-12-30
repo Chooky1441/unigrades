@@ -1,6 +1,6 @@
 #: import utils utils
 
-<ScheduleScreen@Screen>:
+<ScheduleScreen>:
     name: 'schedule_screen'
     NavigationDrawer:
         id: schedule_nav_drawer
@@ -71,7 +71,6 @@
 
                 Label:
                     id: schedule_name
-                    text: 'stuff here'
                     font_size: self.height * 0.5
 
                 Button:
@@ -82,6 +81,50 @@
                         size: self.parent.size
                         pos: self.parent.pos
                         source: 'res/back_arrow.png'
+
+            BoxLayout:
+                name: 'status_bar'
+                size_hint_y: 0.075
+                orientation: 'horizontal'
+
+                canvas:
+                    Color:
+                        rgba: utils.LG, utils.LG, utils.LG, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Label:
+                    id: current_gpa
+                    size_hint_x: 0.5
+                    font_size: self.height * 0.5
+
+                Label:
+                    id: current_units
+                    size_hint_x: 0.5
+                    font_size: self.height * 0.5
+
+            BoxLayout:
+                name: 'status_bar2'
+                size_hint_y: 0.075
+                orientation: 'horizontal'
+
+                canvas:
+                    Color:
+                        rgba: utils.LG, utils.LG, utils.LG, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Label:
+                    id: projected_gpa
+                    size_hint_x: 0.5
+                    font_size: self.height * 0.5
+
+                Label:
+                    id: projected_units
+                    size_hint_x: 0.5
+                    font_size: self.height * 0.5
+
 
             ScrollView:
                 size: self.size

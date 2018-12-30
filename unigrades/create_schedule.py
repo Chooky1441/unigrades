@@ -1,6 +1,6 @@
 from kivy.uix.screenmanager import Screen, SlideTransition
 from kivy.properties import StringProperty
-import utils
+import schedule, utils
 
 class CreateSchedule(Screen):
 
@@ -28,28 +28,40 @@ class CreateSchedule(Screen):
             utils.yesno_popup('Are you sure you want to go back?\nThis schedule will not be saved.', yes_func)
 
     def create(self) -> None:
-
-        if self._name.replace(' ', '') != '':         # if the name is not empty space or just spaces
-            gpa_f = 0
-            try:                                        # make sure the GPA is a number
-                gpa_f = float(self._gpa)
-            except ValueError:
-                utils.default_popup('G.P.A. must be a number.')
-            else:
-                if gpa_f < 0:                           # make sure the GPA is >= 0
-                    utils.default_popup('G.P.A. must be greater than zero.')
+        name = self._name.strip()
+        if name != '':         # if the name is not empty space or just spaces
+            if name not in utils.SCREENS['home_screen'].sch_names:
+                gpa_f = 0
+                try:                                        # make sure the GPA is a number
+                    gpa_f = float(self._gpa)
+                except ValueError:
+                    utils.default_popup('G.P.A. must be a number.')
                 else:
-                    try:
-                        units_f = float(self._units)    # make sure the units is a number
-                    except ValueError:
-                        utils.default_popup('Previous units taken must be a number.')
+                    if gpa_f < 0:                           # make sure the GPA is >= 0
+                        utils.default_popup('G.P.A. must be greater than zero.')
                     else:
-                        if (units_f < 0):               # make sure the units is >= 0
-                            utils.default_popup('Previous units taken must be greater than zero.')
-                        elif (int(units_f) != units_f): # make sure the units is a whole number
-                            utils.default_popup('Previous units taken must be a whole number')
+                        try:
+                            units_f = float(self._units.strip())    # make sure the units is a number
+                        except ValueError:
+                            utils.default_popup('Previous units taken must be a number.')
                         else:
-                            self._clear_text_fields()
-                            pass # create a new schedule
+                            units_i = int(units_f)
+                            if (units_f < 0):               # make sure the units is >= 0
+                                utils.default_popup('Previous units taken must be greater than zero.')
+                            elif (units_i != units_f): # make sure the units is a whole number
+                                utils.default_popup('Previous units taken must be a whole number')
+                            else:
+                                sch = schedule.Schedule(name, gpa_f, units_i, [])
+                                sch.save()
+                                utils.SCREENS['schedule_screen'].init(sch)
+                                utils.switch_screen(self, 'schedule_screen', 'left')
+
+                                if len(utils.SCREENS['home_screen'].sch_names) == 0:
+                                    utils.SCREENS['home_screen'].view_no_sch_lbl(False)
+                                utils.SCREENS['home_screen'].add_sch_button(name)
+
+                                self._clear_text_fields()
+            else:
+                utils.default_popup(f'A schedule with that name "{name}" already exists.')
         else:
             utils.default_popup('Schedule name cannot be left blank.')
