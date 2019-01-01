@@ -27,7 +27,9 @@ class CutPointSet:
 
     def __getitem__(self, perc: float) -> str:
         # will return a letter grade given a percentage
-        if perc >= self.a:
+        if perc is None:
+            return 'N/A'
+        elif perc >= self.a:
             return 'A'
         elif perc >= self.aminus:
             return 'A-'
@@ -88,7 +90,7 @@ class Category:
     # a category is describes how assignemnts should be weighted in a course
     # if "Tests" are 50% of ones grade, then any assignemnts in the "Tests"
     # category will be multiplied by 0.50
-    def __init__(self, name: str, weight: float, assignments: [Assignment]):
+    def __init__(self, name: str, weight: float, assignments: [Assignment] = []):
         self.name = name        # name of the cateogry
         self.weight = weight    # weighting (% of total grade)
         self.assignments = assignments
@@ -100,7 +102,7 @@ class Category:
 
     def grade(self) -> float:
         """returns the percentage (out of 100) recieved in this catagory"""
-        return sum([a.percent() for a in self.assignments]) / len(self.assignments) * self.weight / 100
+        return None if len(self.assignments) == 0 else sum([a.percent() for a in self.assignments]) / len(self.assignments)
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Cateogry"""
@@ -108,9 +110,10 @@ class Category:
         return {'name':self.name, 'weight':self.weight, 'assignments': [a.to_dict() for a in self.assignemnts]}
 
 
+
 class Course:
 
-    def __init__(self, name: str, units: int, cutpointset : CutPointSet, categories: [Category], n_np: bool = False):
+    def __init__(self, name: str, units: int, cutpointset : CutPointSet, categories: [Category], p_np: bool = False):
         self.name = name
         self.units = units
         self.cutpointset = cutpointset
@@ -137,12 +140,18 @@ class Course:
 
     def letter_grade(self) -> str:
         """returns the letter grade the student currently has in the course"""
-        return self.cuttpointset[self.grade_]
+        return self.cutpointset[self.grade_]
 
     def grade(self) -> float:
         """calculates the grade a student has in the course"""
-        return sum([c.grade() for c in self.categories])
+        total_cat_perc, cat_perc = 0, 0
+        for c in self.categories:
+            grade = c.grade()
+            if grade is not None:
+                cat_perc += grade
+                total_cat_perc += c.weight
+        return None if total_cat_perc == 0 else cat_perc / total_cat_perc
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Course"""
-        return {'name': self.name, 'units': self.units, 'cutpointset': self.cutpointset.to_dict(), 'categories': self.categories.to_dict(), 'p_np': self.p_np}
+        return {'name': self.name, 'units': self.units, 'cutpointset': self.cutpointset.to_dict(), 'categories': [c.to_dict() for c in self.categories], 'p_np': self.p_np}

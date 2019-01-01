@@ -1,0 +1,405 @@
+#:import utils utils
+
+<CourseScreen>:
+    name: 'course_screen'
+    _name: text_name.text
+    _units: text_units.text
+    _a: text_a.text
+    _aminus: text_aminus.text
+    _bplus: text_bplus.text
+    _b: text_b.text
+    _bminus: text_bminus.text
+    _cplus: text_cplus.text
+    _c: text_c.text
+    _cminus: text_cminus.text
+    _dplus: text_dplus.text
+    _d: text_d.text
+    _dminus: text_dminus.text
+
+    _n_np: checkbox_pnp.active
+
+
+    BoxLayout:
+        name: 'root_box'
+        orientation: 'vertical'
+
+        BoxLayout:
+
+            name: 'toolbar'
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+
+            canvas:
+                Color:
+                    rgba: utils.DG, utils.DG, utils.DG, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Button:
+                size_hint_x: 0.1
+                on_release: root.back()
+                background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: 'res/back_arrow.png'
+
+            Label:
+                text: 'Course Editor'
+                font_size: self.height * 0.5
+
+            Button:
+                size_hint_x: 0.1
+                on_release: root.create()
+                background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: 'res/enter.png'
+        ScrollView:
+            size: self.size
+            canvas.before:
+                Color:
+                    rgba: utils.G, utils.G, utils.G, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            BoxLayout:
+                id: course_box
+                size_hint_y: None
+                orientation: 'vertical'
+                height: utils.DEFAULT_WIDGET_HEIGHT * 17
+
+                Label:
+                    text: 'Name'
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint: (0.9, 0.1)
+                    font_size: self.height * 0.3
+                    pos_hint: {'center_x': 0.5}
+                TextInput:
+                    id: text_name
+                    multiline: False
+                    size_hint: (0.9, 0.063)
+                    pos_hint: {'center_x': 0.5}
+
+                Label:
+                    text: 'Units'
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint: (0.9, 0.1)
+                    font_size: self.height * 0.3
+                    pos_hint: {'center_x': 0.5}
+                TextInput:
+                    id: text_units
+                    multiline: False
+                    size_hint: (0.9, 0.063)
+                    pos_hint: {'center_x': 0.5}
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'Pass-No-Pass'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.9, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    CheckBox:
+                        id: checkbox_pnp
+                        pos_hint: {'center_x': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                Label:
+                    text: 'Grade Cuttoff Points'
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint: (0.9, 0.1)
+                    font_size: self.height * 0.3
+                    pos_hint: {'center_x': 0.5}
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'A'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_a
+                        text: '93.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'A-'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_aminus
+                        text: '90.0'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'B+'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_bplus
+                        text: '86.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'B'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_b
+                        text: '83.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'B-'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_bminus
+                        text: '80.0'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'C+'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_cplus
+                        text: '76.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'C'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_c
+                        text: '73.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'C-'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_cminus
+                        text: '70.0'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'D+'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_dplus
+                        text: '66.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'D'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_d
+                        text: '63.5'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'D-'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_dminus
+                        text: '60.0'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1
+
+
+                Label:
+                    text: 'Categories'
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint: (0.9, 0.1)
+                    font_size: self.height * 0.3
+                    pos_hint: {'center_x': 0.5}
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: 0.1
+                    Widget:
+                        size_hint_x: 0.1
+                    Label:
+                        text: 'General'
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        size_hint: (0.4, 1)
+                        font_size: self.height * 0.3
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    TextInput:
+                        id: text_cgen
+                        text: '100'
+                        multiline: False
+                        size_hint: (0.4, 0.63)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    Widget:
+                        size_hint_x: 0.1

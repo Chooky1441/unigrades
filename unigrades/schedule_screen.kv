@@ -23,7 +23,7 @@
                 font_size: self.height * 0.4
 
             Button:
-                text: 'Create a new schedule'
+                text: 'Add course'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
@@ -31,7 +31,29 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.8}
                 background_color: 0, 0, 0, 0
+                on_release: root.launch_add_course()
 
+            Button:
+                text: 'Add assignment'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.7}
+                background_color: 0, 0, 0, 0
+                on_release: root.launch_add_assignment()
+
+            Button:
+                text: 'Delete schedule'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.6}
+                background_color: 0, 0, 0, 0
+                on_release: root.delete_schedule()
 
             Button:
                 text: 'About'
@@ -40,7 +62,7 @@
                 valign: 'middle'
                 font_size: self.height * 0.3
                 size_hint: (0.9, 0.1)
-                pos_hint: {'x': 0.05, 'y': 0.7}
+                pos_hint: {'x': 0.05, 'y': 0.5}
                 background_color: 0, 0, 0, 0
                 on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019', 'About')
 
@@ -93,15 +115,28 @@
                     Rectangle:
                         size: self.size
                         pos: self.pos
+                Widget:
+                    size_hint_x: 0.05
                 Label:
                     id: current_gpa
+                    text_size: self.size
+                    valign: 'middle'
+                    haling: 'left'
                     size_hint_x: 0.5
-                    font_size: self.height * 0.5
+                    pos_hint: {'center_x': 0.5}
+                    font_size: self.height * 0.4
 
                 Label:
                     id: current_units
+                    text_size: self.size
+                    valign: 'middle'
+                    haling: 'left'
                     size_hint_x: 0.5
-                    font_size: self.height * 0.5
+                    pos_hint: {'center_x': 0.5}
+                    font_size: self.height * 0.4
+
+                Widget:
+                    size_hint_x: 0.05
 
             BoxLayout:
                 name: 'status_bar2'
@@ -115,16 +150,29 @@
                         size: self.size
                         pos: self.pos
 
+                Widget:
+                    size_hint_x: 0.05
+
                 Label:
                     id: projected_gpa
+                    text_size: self.size
+                    valign: 'middle'
+                    haling: 'left'
                     size_hint_x: 0.5
-                    font_size: self.height * 0.5
+                    pos_hint: {'center_x': 0.5}
+                    font_size: self.height * 0.4
 
                 Label:
                     id: projected_units
+                    text_size: self.size
+                    valign: 'middle'
+                    haling: 'left'
                     size_hint_x: 0.5
-                    font_size: self.height * 0.5
+                    pos_hint: {'center_x': 0.5}
+                    font_size: self.height * 0.4
 
+                Widget:
+                    size_hint_x: 0.05
 
             ScrollView:
                 size: self.size
@@ -136,7 +184,7 @@
                         pos: self.pos
 
                 BoxLayout:
-                    id: sch_box
+                    id: course_box
                     size_hint_y: None
                     orientation: 'vertical'
                     height: 0

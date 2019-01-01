@@ -4,12 +4,18 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import SlideTransition
+from kivy.core.window import Window
 
 DG = 0.13
 G = 0.18
 LG = 0.26
 
+scale = 40
+Window.size = (9 * scale, 16 * scale)
+
 DEFAULT_TRANSITION_LENGTH = 0.15
+DEFAULT_WIDGET_HEIGHT = Window.size[1] * 0.1
+
 
 TO_GPA = {'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0, 'C-': 1.7, 'D+': 1.3, 'D': 1.0, 'D-': 0.7, 'F': 0.0}
 
@@ -74,5 +80,9 @@ class ScheduleLoadError(Exception):
         self.message = message
 
 class ScheduleSaveError(Exception):
+    def __init__(self, message: str):
+        self.message = message
+
+class ScheduleDeleteError(Exception):
     def __init__(self, message: str):
         self.message = message

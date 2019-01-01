@@ -9,7 +9,7 @@ class Schedule:
         self.current_units = current_units                     # the total units the student completed, excluding current courses
         self.courses = courses                                 # list of courses that the student is enrolled in
         self.projected_gpa =  self._calc_projected_gpa()       # the estimated gpa based on the grades they are currently recieving
-        self.projected_units = self.current_units + self._calc_courses_units()  # the units the student will have completed at the end of this quarter/semester
+        self.projected_units = self._calc_courses_units()      # the units the student will have completed at the end of this quarter/semester
 
     # private functions
 
@@ -26,14 +26,15 @@ class Schedule:
 
     def _add_one_course_to_gpa(self, c: course.Course, gpa: float) -> float:
         """returns the gpa with one course added"""
-        return gpa * (self.current_units / (self.current_units + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (self.current_units + c.units))
+        return gpa if c.letter_grade() == 'N/A' else gpa * (self.current_units / (self.current_units + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (self.current_units + c.units))
 
     # public functions
 
     def add_course(self, c: course.Course):
         """adds a course to the schedule, updating any relevant information"""
-        self.courses.add(c)
+        self.courses.append(c)
         self.projected_units += c.units
+        self.projected_gpa = self._add_one_course_to_gpa(c, self.current_gpa)
 
     def remove_course(self, c: course.Course):
         """removes the course from the schedule, removing any relecant information"""
@@ -49,8 +50,10 @@ class Schedule:
 
     def to_dict(self) -> dict:
         """returns a dictionary contaning all the information in a schedule"""
-        return {'name': self.name, 'current_gpa':self. current_gpa, 'current_units': self.current_units,
+        d = {'name': self.name, 'current_gpa':self. current_gpa, 'current_units': self.current_units,
                 'courses': [c.to_dict() for c in self.courses]}
+        print(d)
+        return d
 
     def save(self) -> dict:
         """saves the schedule to the schedules folder"""

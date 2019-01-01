@@ -13,7 +13,7 @@ def get_schedule_dict(name: str) -> dict:
     try:                                                 # if the file cannot be opened then the appropriate error will be raised
         file = open(pathlib.Path(f'schedules/{name}.json'), 'r')
     except:
-        raise utils.ScheduleLoadError('Failed to load schedule')
+        raise utils.ScheduleLoadError('Failed to load schedule.')
     else:
         with file as f:
             sch_dict = json.load(f)
@@ -32,6 +32,13 @@ def save_schedule(schedule: Schedule) -> None:
         try:
             json.dump(schedule.to_dict(), f)
         except:
-            raise utils.ScheduleSaveError('Failed to save schedule')
+            raise utils.ScheduleSaveError('Failed to save schedule.')
         finally:
             file.close()
+
+def delete_schedule(name: str) -> None:
+    """trys to delete the given schedule, if it can not be found an error is raised"""
+    try:
+        pathlib.Path(f'schedules/{name}.json').unlink()
+    except:
+        raise utils.ScheduleDeleteError('Failed to delete schedule.')
