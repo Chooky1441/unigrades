@@ -1,10 +1,10 @@
 #:import utils utils
 
-<CreateSchedule>:
-    name: 'create_schedule'
+<CategoryScreen>:
+    name: 'category_screen'
     _name: text_name.text
-    _gpa: text_gpa.text
-    _units: text_units.text
+    _weight: text_weight.text
+
 
     BoxLayout:
         name: 'root_box'
@@ -25,7 +25,7 @@
 
             Button:
                 size_hint_x: 0.1
-                on_release: root.back()
+                on_release: root.return_to_course()
                 background_color: 0, 0, 0, 0
                 Image:
                     size: self.parent.size
@@ -33,12 +33,12 @@
                     source: 'res/back_arrow.png'
 
             Label:
-                text: 'Schedule Editor'
+                text: 'Add a Category'
                 font_size: self.height * 0.5
 
             Button:
                 size_hint_x: 0.1
-                on_release: root.create()
+                on_release: root.add_category()
                 background_color: 0, 0, 0, 0
                 Image:
                     size: self.parent.size
@@ -69,7 +69,7 @@
                 pos_hint: {'x': 0.05, 'y': 0.86}
 
             Label:
-                text: 'Current G.P.A.'
+                text: 'Weight (percent of grade out of 100)'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
@@ -77,23 +77,8 @@
                 pos_hint: {'x': 0.05, 'y': 0.72}
                 font_size: self.height * 0.3
             TextInput:
-                id: text_gpa
-                text: root._gpa
+                id: text_weight
+                text: root._weight
                 multiline: False
                 size_hint: (0.9, 0.063)
                 pos_hint: {'x': 0.05, 'y': 0.68}
-
-            Label:
-                text: 'Amount of units taken'
-                text_size: self.size
-                halign: 'left'
-                valign: 'middle'
-                size_hint: (0.9, 0.1)
-                pos_hint: {'x': 0.05, 'y': 0.54}
-                font_size: self.height * 0.3
-            TextInput:
-                id: text_units
-                text: root._units
-                multiline: False
-                size_hint: (0.9, 0.063)
-                pos_hint: {'x': 0.05, 'y': 0.50}

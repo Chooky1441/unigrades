@@ -1,7 +1,7 @@
 #: import utils utils
 
-<ScheduleScreen>:
-    name: 'schedule_screen'
+<CourseViewScreen>:
+    name: 'course_view_screen'
     NavigationDrawer:
         id: schedule_nav_drawer
         FloatLayout:
@@ -23,7 +23,7 @@
                 font_size: self.height * 0.4
 
             Button:
-                text: 'Add course'
+                text: 'Add assignment'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
@@ -31,10 +31,10 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.8}
                 background_color: 0, 0, 0, 0
-                on_release: root.launch_add_course()
+
 
             Button:
-                text: 'Edit schedule'
+                text: 'Add category'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
@@ -42,10 +42,10 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.7}
                 background_color: 0, 0, 0, 0
-                on_release: root.launch_edit_schedule()
+                on_release: root.launch_category_screen()
 
             Button:
-                text: 'Delete schedule'
+                text: 'Edit categories'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
@@ -53,7 +53,28 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.6}
                 background_color: 0, 0, 0, 0
-                on_release: root.delete_schedule()
+
+            Button:
+                text: 'Edit course'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.5}
+                background_color: 0, 0, 0, 0
+                on_release: root.launch_edit_course()
+
+            Button:
+                text: 'Delete course'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                font_size: self.height * 0.3
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.4}
+                background_color: 0, 0, 0, 0
+                on_release: root.delete_course()
 
             Button:
                 text: 'About'
@@ -62,7 +83,7 @@
                 valign: 'middle'
                 font_size: self.height * 0.3
                 size_hint: (0.9, 0.1)
-                pos_hint: {'x': 0.05, 'y': 0.5}
+                pos_hint: {'x': 0.05, 'y': 0.3}
                 background_color: 0, 0, 0, 0
                 on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019', 'About')
 
@@ -92,12 +113,12 @@
                         source: 'res/lines.png'
 
                 Label:
-                    id: schedule_name
+                    id: course_name
                     font_size: self.height * 0.5
 
                 Button:
                     size_hint_x: 0.1
-                    on_release: root.return_to_homescreen()
+                    on_release: root.return_to_schedulescreen()
                     background_color: 0, 0, 0, 0
                     Image:
                         size: self.parent.size
@@ -115,60 +136,24 @@
                     Rectangle:
                         size: self.size
                         pos: self.pos
-                Widget:
-                    size_hint_x: 0.05
+
                 Label:
-                    id: current_gpa
+                    id: lbl_grade
                     text_size: self.size
                     valign: 'middle'
+                    halign: 'center'
                     size_hint_x: 0.5
                     pos_hint: {'center_x': 0.5}
                     font_size: self.height * 0.4
 
                 Label:
-                    id: current_units
+                    id: lbl_units
                     text_size: self.size
                     valign: 'middle'
+                    halign: 'center'
                     size_hint_x: 0.5
                     pos_hint: {'center_x': 0.5}
                     font_size: self.height * 0.4
-
-                Widget:
-                    size_hint_x: 0.05
-
-            BoxLayout:
-                name: 'status_bar2'
-                size_hint_y: 0.075
-                orientation: 'horizontal'
-
-                canvas:
-                    Color:
-                        rgba: utils.LG, utils.LG, utils.LG, 1
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-
-                Widget:
-                    size_hint_x: 0.05
-
-                Label:
-                    id: projected_gpa
-                    text_size: self.size
-                    valign: 'middle'
-                    size_hint_x: 0.5
-                    pos_hint: {'center_x': 0.5}
-                    font_size: self.height * 0.4
-
-                Label:
-                    id: projected_units
-                    text_size: self.size
-                    valign: 'middle'
-                    size_hint_x: 0.5
-                    pos_hint: {'center_x': 0.5}
-                    font_size: self.height * 0.4
-
-                Widget:
-                    size_hint_x: 0.05
 
             ScrollView:
                 size: self.size
@@ -180,7 +165,32 @@
                         pos: self.pos
 
                 BoxLayout:
-                    id: course_box
                     size_hint_y: None
                     orientation: 'vertical'
-                    height: 0
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'vertical'
+                        height: utils.DEFAULT_WIDGET_HEIGHT
+
+                        Label:
+                            text: 'Assignments'
+                            text_size: self.size
+                            valign: 'bottom'
+                            halign: 'center'
+                            pos_hint: {'center_x': 0.5}
+                            font_size: self.height * 0.3
+
+
+                    BoxLayout:
+                        size_hint_y: None
+                        orientation: 'vertical'
+                        height: utils.DEFAULT_WIDGET_HEIGHT
+
+                        Label:
+                            text: 'Categories'
+                            text_size: self.size
+                            valign: 'bottom'
+                            halign: 'center'
+                            pos_hint: {'center_x': 0.5}
+                            font_size: self.height * 0.3

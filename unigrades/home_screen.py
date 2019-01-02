@@ -52,6 +52,7 @@ class HomeScreen(Screen):
         self.ids.sch_box.remove_widget(self.sch_buttons[name])  # remove it from the screen
         del self.sch_buttons[name]                              # remove it from the dict
         self.sch_names.remove(name)
+        self.ids.sch_box.height = len(self.sch_names) * utils.DEFAULT_WIDGET_HEIGHT
         self.check_view_no_sch_lbl()
 
     def launch_create_schedule(self) -> None:

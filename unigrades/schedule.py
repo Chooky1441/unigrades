@@ -34,11 +34,12 @@ class Schedule:
         """adds a course to the schedule, updating any relevant information"""
         self.courses.append(c)
         self.projected_units += c.units
-        self.projected_gpa = self._add_one_course_to_gpa(c, self.current_gpa)
 
     def remove_course(self, c: course.Course):
         """removes the course from the schedule, removing any relecant information"""
         self.courses.remove(c)
+        self.projected_gpa = self._calc_projected_gpa()
+        self.projected_units -= c.units
 
     def complete_course(self, c: course.Course):
         """removes the course form the schedule aswell as adding re-calculating the schedule stats"""
@@ -50,10 +51,8 @@ class Schedule:
 
     def to_dict(self) -> dict:
         """returns a dictionary contaning all the information in a schedule"""
-        d = {'name': self.name, 'current_gpa':self. current_gpa, 'current_units': self.current_units,
+        return {'name': self.name, 'current_gpa':self. current_gpa, 'current_units': self.current_units,
                 'courses': [c.to_dict() for c in self.courses]}
-        print(d)
-        return d
 
     def save(self) -> dict:
         """saves the schedule to the schedules folder"""

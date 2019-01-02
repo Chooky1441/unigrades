@@ -22,7 +22,24 @@ def get_schedule_dict(name: str) -> dict:
 def load_schedule(name: str) -> Schedule:
     """converts the dict gotten from the json file into a schedule object"""
     s = get_schedule_dict(name)
-    return Schedule(s['name'], s['current_gpa'], s['current_units'], [])
+    courses = []
+    for c in s['courses']:
+        rcps = c['cutpointset']
+        cps = course.CutPointSet(rcps['a'], rcps['aminus'],
+                                 rcps['bplus'], rcps['b'], rcps['bminus'],
+                                 rcps['cplus'], rcps['c'], rcps['cminus'],
+                                 rcps['dplus'], rcps['d'], rcps['dminus'])
+        cats = []
+        for cat in c['categories']:
+            assignments = []
+
+            for a in cat['assignments']:
+                a.append(course.Assignment(a['name'], a['pts_rec'], a['pts_total']))
+
+            cats.append(course.Category(cat['name'], cat['weight'], assignments))
+        courses.append(course.Course(c['name'], c['units'], cps, cats, c['p_np']))
+
+    return Schedule(s['name'], s['current_gpa'], s['current_units'], courses)
 
 
 def save_schedule(schedule: Schedule) -> None:

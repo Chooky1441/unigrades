@@ -25,6 +25,12 @@ class CutPointSet:
         s = '\n\t'.join(['{:>7}: {}'.format(k, v) for k, v in self.to_dict().items()])
         return f'CutPointSet:\n\t{s}'
 
+    def str_list(self):
+        return [str(self.a), str(self.aminus),
+                str(self.bplus), str(self.b), str(self.bminus),
+                str(self.cplus), str(self.c), str(self.cminus),
+                str(self.dplus), str(self.d), str(self.dminus)]
+
     def __getitem__(self, perc: float) -> str:
         # will return a letter grade given a percentage
         if perc is None:
@@ -107,7 +113,7 @@ class Category:
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Cateogry"""
         # used when saving as a json file
-        return {'name':self.name, 'weight':self.weight, 'assignments': [a.to_dict() for a in self.assignemnts]}
+        return {'name':self.name, 'weight':self.weight, 'assignments': [a.to_dict() for a in self.assignments]}
 
 
 
@@ -118,6 +124,8 @@ class Course:
         self.units = units
         self.cutpointset = cutpointset
         self.categories = categories
+        if self.categories == []:
+            self.categories.append(categories('General', 100))
         self.grade_ = self.grade()
         self.p_np = p_np        # 'pass no pass' is used if the student doesnt want a letter grade for the class
 
@@ -151,6 +159,10 @@ class Course:
                 cat_perc += grade
                 total_cat_perc += c.weight
         return None if total_cat_perc == 0 else cat_perc / total_cat_perc
+
+    def add_category(self, c: Category) -> None:
+        """adds the category to the course and sorts the list"""
+        self.categories = sorted(self.categories + [c], key = lambda x: x.name)
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Course"""

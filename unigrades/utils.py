@@ -1,5 +1,6 @@
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.core.text import Label as CoreLabel
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
@@ -31,20 +32,21 @@ def switch_screen(self, screen_name: str, slide_dir: str) -> None:
     self.parent.current = screen_name
 
 def default_popup(text: str, title: str = 'Warning') -> None:
-    err_box = BoxLayout(orientation = 'vertical', padding = (10))
-
-    err_txt = Label(text = text, font_size = 15)
+    err_box = BoxLayout(orientation = 'vertical')
+    err_txt = Label(text = text, font_size = 15, text_size = (DEFAULT_WIDGET_HEIGHT * 3, DEFAULT_WIDGET_HEIGHT * 2), valign = 'middle', halign = 'center')
     err_box.add_widget(err_txt)
 
     close_button = Button(text = "Close")
     err_box.add_widget(close_button)
     err = Popup(title = title, content = err_box, size_hint = (0.6, 0.4))
+
     close_button.bind(on_release = err.dismiss)
     err.open()
 
+
 def yesno_popup(text: str, yes_func: 'function') -> None:
     box = BoxLayout(orientation = 'vertical', padding = (10))
-    box.add_widget(Label(text = text))
+    box.add_widget(Label(text = text, font_size = 15, text_size = (DEFAULT_WIDGET_HEIGHT * 3, DEFAULT_WIDGET_HEIGHT * 2), valign = 'middle', halign = 'center'))
 
     button_box = BoxLayout(orientation = 'horizontal')
     box.add_widget(button_box)
