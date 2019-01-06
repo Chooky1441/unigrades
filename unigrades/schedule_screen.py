@@ -55,6 +55,10 @@ class ScheduleScreen(Screen):
         self.ids.course_box.add_widget(button)
         self._course_buttons[c.name] = button
 
+    def update_gpa(self) -> None:
+        self._schedule.projected_gpa = self._schedule._calc_projected_gpa()
+        self.ids.projected_gpa.text = f'Projected GPA: {round(self._schedule.projected_gpa, 2)}'
+
     def add_course(self, c: course.Course) -> None:
         """adds a course to the schedule and updates the relevant info on the screen"""
         self._schedule.add_course(c)

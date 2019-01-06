@@ -3,7 +3,6 @@
 <CategoryScreen>:
     name: 'category_screen'
     _name: text_name.text
-    _weight: text_weight.text
 
 
     BoxLayout:
@@ -69,16 +68,10 @@
                 pos_hint: {'x': 0.05, 'y': 0.86}
 
             Label:
-                text: 'Weight (percent of grade out of 100)'
+                text: 'Use the "category editor" button to set/change the weight of this category.'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.72}
                 font_size: self.height * 0.3
-            TextInput:
-                id: text_weight
-                text: root._weight
-                multiline: False
-                size_hint: (0.9, 0.063)
-                pos_hint: {'x': 0.05, 'y': 0.68}

@@ -34,7 +34,7 @@ def load_schedule(name: str) -> Schedule:
             assignments = []
 
             for a in cat['assignments']:
-                a.append(course.Assignment(a['name'], a['pts_rec'], a['pts_total']))
+                assignments.append(course.Assignment(a['name'], a['pts_rec'], a['pts_total']))
 
             cats.append(course.Category(cat['name'], cat['weight'], assignments))
         courses.append(course.Course(c['name'], c['units'], cps, cats, c['p_np']))

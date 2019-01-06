@@ -11,8 +11,6 @@ class Schedule:
         self.projected_gpa =  self._calc_projected_gpa()       # the estimated gpa based on the grades they are currently recieving
         self.projected_units = self._calc_courses_units()      # the units the student will have completed at the end of this quarter/semester
 
-    # private functions
-
     def _calc_courses_units(self) -> int:
         """returns the amount of units currently enrolled in"""
         return sum([c.units for c in self.courses])

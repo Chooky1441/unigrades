@@ -1,17 +1,16 @@
 #:import utils utils
 
-<AsignmentScreen>:
+<AssignmentScreen>:
     name: 'assignment_screen'
     _name: text_name.text
-    _gpa: text_gpa.text
-    _units: text_units.text
+    _pts_rec: text_rec.text
+    _pts_total: text_total.text
 
     BoxLayout:
         name: 'root_box'
         orientation: 'vertical'
 
         BoxLayout:
-
             name: 'toolbar'
             orientation: 'horizontal'
             size_hint_y: 0.1
@@ -25,7 +24,7 @@
 
             Button:
                 size_hint_x: 0.1
-                on_release: root.back()
+                on_release: root.return_to_course()
                 background_color: 0, 0, 0, 0
                 Image:
                     size: self.parent.size
@@ -33,12 +32,12 @@
                     source: 'res/back_arrow.png'
 
             Label:
-                text: 'Create a Schedule'
+                text: 'Assignment Editor'
                 font_size: self.height * 0.5
 
             Button:
                 size_hint_x: 0.1
-                on_release: root.create()
+                on_release: root.add_assignment()
                 background_color: 0, 0, 0, 0
                 Image:
                     size: self.parent.size
@@ -69,31 +68,52 @@
                 pos_hint: {'x': 0.05, 'y': 0.86}
 
             Label:
-                text: 'Current G.P.A.'
+                text: 'Is Graded'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
-                size_hint: (0.9, 0.1)
+                size_hint: (0.5, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.72}
                 font_size: self.height * 0.3
-            TextInput:
-                id: text_gpa
-                text: root._gpa
-                multiline: False
-                size_hint: (0.9, 0.063)
-                pos_hint: {'x': 0.05, 'y': 0.68}
+            CheckBox:
+                id: checkbox_graded
+                size_hint: (0.5, 0.1)
+                active: True
+                pos_hint: {'x': 0.50, 'y': 0.72}
 
             Label:
-                text: 'Amount of units taken'
+                text: 'Points Recieved'
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
                 size_hint: (0.9, 0.1)
-                pos_hint: {'x': 0.05, 'y': 0.54}
+                pos_hint: {'x': 0.05, 'y': 0.62}
                 font_size: self.height * 0.3
             TextInput:
-                id: text_units
-                text: root._units
+                id: text_rec
+                text: root._pts_rec
                 multiline: False
                 size_hint: (0.9, 0.063)
-                pos_hint: {'x': 0.05, 'y': 0.50}
+                pos_hint: {'x': 0.05, 'y': 0.58}
+                disabled: not checkbox_graded.active
+
+            Label:
+                text: 'Total Points'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.44}
+                font_size: self.height * 0.3
+            TextInput:
+                id: text_total
+                text: root._pts_total
+                multiline: False
+                size_hint: (0.9, 0.063)
+                pos_hint: {'x': 0.05, 'y': 0.40}
+
+            Spinner:
+                id: cat_spinner
+                text: 'Choose a category'
+                size_hint: (0.9, 0.1)
+                pos_hint: {'x': 0.05, 'y': 0.24}

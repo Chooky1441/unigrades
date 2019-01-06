@@ -31,7 +31,7 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.8}
                 background_color: 0, 0, 0, 0
-
+                on_release: root.launch_assignment_screen()
 
             Button:
                 text: 'Add category'
@@ -85,7 +85,7 @@
                 size_hint: (0.9, 0.1)
                 pos_hint: {'x': 0.05, 'y': 0.3}
                 background_color: 0, 0, 0, 0
-                on_release: utils.default_popup('Unigrades was made by Anthony Navarrette.\n2019', 'About')
+                on_release: utils.default_popup('\nThis screen shows all the assignments in the course and the info about the course.  In order to add assignments you must add categories to add them into, such as "Tests" or "Homework".  There is a default category called "General" worth 100% of the grade, this can be changed in the category editor.\n', 'About')
 
         BoxLayout:
             id: root_box
@@ -165,32 +165,7 @@
                         pos: self.pos
 
                 BoxLayout:
+                    id: assignment_box
                     size_hint_y: None
                     orientation: 'vertical'
-
-                    BoxLayout:
-                        size_hint_y: None
-                        orientation: 'vertical'
-                        height: utils.DEFAULT_WIDGET_HEIGHT
-
-                        Label:
-                            text: 'Assignments'
-                            text_size: self.size
-                            valign: 'bottom'
-                            halign: 'center'
-                            pos_hint: {'center_x': 0.5}
-                            font_size: self.height * 0.3
-
-
-                    BoxLayout:
-                        size_hint_y: None
-                        orientation: 'vertical'
-                        height: utils.DEFAULT_WIDGET_HEIGHT
-
-                        Label:
-                            text: 'Categories'
-                            text_size: self.size
-                            valign: 'bottom'
-                            halign: 'center'
-                            pos_hint: {'center_x': 0.5}
-                            font_size: self.height * 0.3
+                    height: 0

@@ -1,5 +1,5 @@
 from kivy.uix.screenmanager import Screen
-from kivy.properties import StringProperty, BooleanProperty
+from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
@@ -14,8 +14,6 @@ class CourseScreen(Screen):
     _bplus, _b, _bminus = StringProperty(), StringProperty(), StringProperty()
     _cplus, _c, _cminus = StringProperty(), StringProperty(), StringProperty()
     _dplus, _d, _dminus = StringProperty(), StringProperty(), StringProperty()
-
-    _p_np = BooleanProperty(False)
 
     _course = None
 
@@ -42,6 +40,7 @@ class CourseScreen(Screen):
         self._dplus = str(self._course.cutpointset.dplus)
         self._d = str(self._course.cutpointset.d)
         self._dminus = str(self._course.cutpointset.dminus)
+        self.ids.checkbox_pnp.active = self._course.p_np
 
     def _clear_fields(self) -> None:
         """clears all of the text fields"""
@@ -59,6 +58,7 @@ class CourseScreen(Screen):
         self._dplus = '66.5'
         self._d = '63.5'
         self._dminus = '60.0'
+        self.ids.checkbox_pnp.active = False
         self._course = None
 
 
@@ -97,7 +97,7 @@ class CourseScreen(Screen):
                                 utils.SCREENS['schedule_screen'].remove_course(self._course)
                                 self._course = None
 
-                            utils.SCREENS['schedule_screen'].add_course(course.Course(name, units_f, cps, [], self._p_np))
+                            utils.SCREENS['schedule_screen'].add_course(course.Course(name, units_f, cps, [], self.ids.checkbox_pnp.active))
                             self._clear_fields()
                             utils.switch_screen(self, 'schedule_screen', 'left')
                     else:
@@ -109,10 +109,17 @@ class CourseScreen(Screen):
 
 
     def back(self) -> None:
+
+        def return_to():
+            if self._course is None:
+                utils.switch_screen(self, 'schedule_screen', 'right')
+            else:
+                utils.switch_screen(self, 'course_view_screen', 'right')
+
         show_warning = False
         cutpointset = [self._a, self._aminus, self._bplus, self._b, self._bminus, self._cplus, self._c, self. _cminus, self._dplus, self. _d, self._dminus]
 
-        if self._course is not None and self._name == self._course.name and self._units == str(self._course.units) and self._p_np == self._course.p_np and cutpointset == self._course.cutpointset.str_list():
+        if self._course is not None and self._name == self._course.name and self._units == str(self._course.units) and self.ids.checkbox_pnp.active == self._course.p_np and cutpointset == self._course.cutpointset.str_list():
             self._clear_fields()
             utils.switch_screen(self, 'course_view_screen', 'right')
             return
@@ -127,14 +134,11 @@ class CourseScreen(Screen):
                     break
 
         if not show_warning:                                        # else just go back
-            utils.switch_screen(self, 'schedule_screen', 'right')
+            return_to()
         else:
 
             def yes_func():
                 self._clear_fields()
-                if self._course is None:
-                    utils.switch_screen(self, 'schedule_screen', 'right')
-                else:
-                    utils.switch_screen(self, 'course_view_screen', 'right')
+                return_to()
 
-            utils.yesno_popup('Are you sure you want to go back?.  This course will not be added.', yes_func)
+            utils.yesno_popup('Are you sure you want to go back?  This course will not be added.', yes_func)

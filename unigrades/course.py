@@ -108,7 +108,7 @@ class Category:
 
     def grade(self) -> float:
         """returns the percentage (out of 100) recieved in this catagory"""
-        return None if len(self.assignments) == 0 else sum([a.percent() for a in self.assignments]) / len(self.assignments)
+        return None if len(self.assignments) == 0 else sum([a.percent() for a in self.assignments if a.is_graded()]) / len(self.assignments)
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Cateogry"""
@@ -125,7 +125,7 @@ class Course:
         self.cutpointset = cutpointset
         self.categories = categories
         if self.categories == []:
-            self.categories.append(categories('General', 100))
+            self.categories = sorted(self.categories + [Category('General', 100)], key = lambda x: x.name.lower())
         self.grade_ = self.grade()
         self.p_np = p_np        # 'pass no pass' is used if the student doesnt want a letter grade for the class
 
@@ -136,15 +136,22 @@ class Course:
         cats = '\n\t'.join([str(c) for c in self.categories])
         return f'Course {self.name}\n\tUnits: {self.units}\n\n\t{str(self.cutpointset)}\n\n\t{cats}'
 
-    def add_assignment(category: str, a: Assignment):
+    def add_assignment(self, c: Category, a: Assignment) -> None:
         """adds the assignment to the category, if the category does not exist than an error is raised"""
+        c.assignments = sorted(c.assignments + [a], key = lambda x: x.name.lower())
+        self.grade_ = self.grade()
+
+    def del_assignment(self, a: Assignment) -> None:
+        """removes the assignment from the course"""
         for c in self.categories:
-            if c.name == category:
-                c.assignments.append(a)     # if the category can be found, add the assignment to the
-                self.grade_ = self.grade()  # category and re-calculate the expected grade
-                break
-        else:
-            raise utils.InvalidCategoryException(category)
+            if a in c.assignments:
+                c.assignments.remove(a)
+
+        self.grade_ = self.grade()
+
+    def amt_of_assignments(self) -> int:
+        """returns the total amount of assignments in the course"""
+        return sum(len(c.assignments) for c in self.categories)
 
     def letter_grade(self) -> str:
         """returns the letter grade the student currently has in the course"""
@@ -162,7 +169,17 @@ class Course:
 
     def add_category(self, c: Category) -> None:
         """adds the category to the course and sorts the list"""
-        self.categories = sorted(self.categories + [c], key = lambda x: x.name)
+        self.categories = sorted(self.categories + [c], key = lambda x: x.name.lower())
+
+    def get_category(self, name: str) -> Category:
+        for c in self.categories:
+            if c.name == name:
+                return c
+        raise InvalidCategoryException(name)
+
+    def get_assignments(self) -> {str: [Assignment]}:
+        """returns all the assignments in the course"""
+        return {c.name : [a] for c in self.categories for a in c.assignments}
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Course"""

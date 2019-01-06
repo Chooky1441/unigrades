@@ -3,9 +3,11 @@ from kivy.uix.label import Label
 from kivy.core.text import Label as CoreLabel
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from kivy.lang.builder import Builder
+from kivy.lang import Builder
 from kivy.uix.screenmanager import SlideTransition
 from kivy.core.window import Window
+from kivy.uix.scrollview import ScrollView
+from kivy.properties import StringProperty
 
 DG = 0.13
 G = 0.18
@@ -31,14 +33,44 @@ def switch_screen(self, screen_name: str, slide_dir: str) -> None:
     self.parent.transition = SlideTransition(direction = slide_dir, duration = DEFAULT_TRANSITION_LENGTH)
     self.parent.current = screen_name
 
+Builder.load_string('''
+#: import utils utils
+<Dividor>:
+    size_hint_y: 0.0001
+    canvas:
+        Color:
+            rgba: utils.LG, utils.LG, utils.LG, 1
+        Rectangle:
+            size: self.width, 2
+            pos: self.pos
+''')
+
+class Dividor(BoxLayout):
+    pass
+
+Builder.load_string('''
+<ScrollableLabel>:
+    Label:
+        text: root.text
+        font_size: 15
+        text_size: self.width, None
+        size_hint_y: None
+        halign: 'center'
+        height: self.texture_size[1]
+''')
+
+class ScrollableLabel(ScrollView):
+    text = StringProperty()
+
 def default_popup(text: str, title: str = 'Warning') -> None:
     err_box = BoxLayout(orientation = 'vertical')
-    err_txt = Label(text = text, font_size = 15, text_size = (DEFAULT_WIDGET_HEIGHT * 3, DEFAULT_WIDGET_HEIGHT * 2), valign = 'middle', halign = 'center')
+    err_txt = ScrollableLabel()
+    err_txt.text = text
     err_box.add_widget(err_txt)
 
-    close_button = Button(text = "Close")
+    close_button = Button(text = 'Close', size_hint_y = 0.35)
     err_box.add_widget(close_button)
-    err = Popup(title = title, content = err_box, size_hint = (0.6, 0.4))
+    err = Popup(title = title, content = err_box, size_hint = (0.9, 0.4))
 
     close_button.bind(on_release = err.dismiss)
     err.open()
@@ -46,18 +78,19 @@ def default_popup(text: str, title: str = 'Warning') -> None:
 
 def yesno_popup(text: str, yes_func: 'function') -> None:
     box = BoxLayout(orientation = 'vertical', padding = (10))
-    box.add_widget(Label(text = text, font_size = 15, text_size = (DEFAULT_WIDGET_HEIGHT * 3, DEFAULT_WIDGET_HEIGHT * 2), valign = 'middle', halign = 'center'))
-
+    err_txt = ScrollableLabel()
+    err_txt.text = text
+    box.add_widget(err_txt)
     button_box = BoxLayout(orientation = 'horizontal')
     box.add_widget(button_box)
 
-    yes_button = Button(text = 'Yes')
-    no_button = Button(text = 'No')
+    yes_button = Button(text = 'Yes', size_hint_y = 0.35)
+    no_button = Button(text = 'No', size_hint_y = 0.35)
 
     button_box.add_widget(yes_button)
     button_box.add_widget(no_button)
 
-    popup = Popup(title = 'Warning', content = box, size_hint = (0.6, 0.4))
+    popup = Popup(title = 'Warning', content = box, size_hint = (0.9, 0.4))
 
     def new_yes_func(*args):
         yes_func()
