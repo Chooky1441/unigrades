@@ -163,13 +163,18 @@ class Course:
         for c in self.categories:
             grade = c.grade()
             if grade is not None:
-                cat_perc += grade
+                cat_perc += grade * c.weight
                 total_cat_perc += c.weight
         return None if total_cat_perc == 0 else cat_perc / total_cat_perc
 
     def add_category(self, c: Category) -> None:
         """adds the category to the course and sorts the list"""
         self.categories = sorted(self.categories + [c], key = lambda x: x.name.lower())
+
+    def del_category(self, c: Category) -> None:
+        """removes the category and updates the grade"""
+        self.categories.remove(c)
+        self.grade_ = self.grade()
 
     def get_category(self, name: str) -> Category:
         for c in self.categories:
@@ -180,6 +185,12 @@ class Course:
     def get_assignments(self) -> {str: [Assignment]}:
         """returns all the assignments in the course"""
         return {c.name : [a] for c in self.categories for a in c.assignments}
+
+    def get_cateogry_from_assign(self, a: Assignment) -> Category:
+        """returns the category that te assignment belongs to"""
+        for c in self.categories:
+            if a in c.assignments:
+                return c
 
     def to_dict(self) -> dict:
         """returns a dictionary with all of the data representing a Course"""

@@ -93,13 +93,17 @@ class CourseScreen(Screen):
                                                      float(self._cplus), float(self._c), float(self._cminus),
                                                      float(self._dplus), float(self._d), float(self._dminus))
 
+                            cats = [] if self._course is None else self._course.categories
+
+                            utils.SCREENS['schedule_screen'].add_course(course.Course(name, units_f, cps, cats, self.ids.checkbox_pnp.active))
+                            screen = 'schedule_screen'
                             if self._course is not None:
                                 utils.SCREENS['schedule_screen'].remove_course(self._course)
                                 self._course = None
+                                screen = 'course_view_screen'
 
-                            utils.SCREENS['schedule_screen'].add_course(course.Course(name, units_f, cps, [], self.ids.checkbox_pnp.active))
                             self._clear_fields()
-                            utils.switch_screen(self, 'schedule_screen', 'left')
+                            utils.switch_screen(self, screen, 'left')
                     else:
                         utils.default_popup('Units must be a positive number.')
             else:

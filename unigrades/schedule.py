@@ -24,6 +24,8 @@ class Schedule:
 
     def _add_one_course_to_gpa(self, c: course.Course, gpa: float) -> float:
         """returns the gpa with one course added"""
+        if c.p_np:
+            return gpa
         return gpa if c.letter_grade() == 'N/A' else gpa * (self.current_units / (self.current_units + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (self.current_units + c.units))
 
     # public functions

@@ -1,0 +1,59 @@
+#:import utils utils
+
+<CategoryEditScreen>:
+    name: 'category_edit_screen'
+
+    BoxLayout:
+        name: 'root_box'
+        orientation: 'vertical'
+
+        BoxLayout:
+
+            name: 'toolbar'
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+
+            canvas:
+                Color:
+                    rgba: utils.DG, utils.DG, utils.DG, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Button:
+                size_hint_x: 0.1
+                on_release: root.return_to_course()
+                background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: 'res/back_arrow.png'
+
+            Label:
+                text: 'Categories Editor'
+                font_size: self.height * 0.5
+
+            Button:
+                size_hint_x: 0.1
+                on_release: root.save_categories()
+                background_color: 0, 0, 0, 0
+                Image:
+                    size: self.parent.size
+                    pos: self.parent.pos
+                    source: 'res/enter.png'
+
+
+        ScrollView:
+            size: self.size
+            canvas.before:
+                Color:
+                    rgba: utils.G, utils.G, utils.G, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            BoxLayout:
+                id: cat_edit_box
+                size_hint_y: None
+                orientation: 'vertical'
+                height: 0

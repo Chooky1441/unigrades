@@ -39,7 +39,7 @@ class CategoryScreen(Screen):
             self.clear_fields()
             utils.switch_screen(self, 'course_view_screen', 'right')
 
-        if self._name == '' and self._weight == '':
+        if self._name == '':
             utils.switch_screen(self, 'course_view_screen', 'right')
         else:
             utils.yesno_popup('Are you sure you want to go back?  This category will not be added to the course.', yes_func)
