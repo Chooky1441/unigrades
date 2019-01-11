@@ -82,8 +82,12 @@ class CourseScreen(Screen):
                                 if perc_f > 100:                                # if any cutpoint number is over 100, show an error
                                     utils.default_popup(f'The percentage for {cutpointset_items[i][0]} must be less than or equal to 100')
                                     break
+                                elif perc_f < 0:
+                                    utils.default_popup(f'The percentage for {cutpointset_items[i][0]} must be greater than or equal to 0')
+                                    break
                                 elif i > 0 and perc_f > float(cutpointset_items[i - 1][1]): # if the percentages are not in decending order, show an error
-                                    utils.default_popup(f'The percentage of {cutpointset_items[i][0]} ({cutpointset_items[i][1]}) cannot be greater than the percentage of {cutpointset_tiems[i - 1][0]} ({cutpointset_items[i - 1][0]}).')
+                                    utils.default_popup(f'The percentage of {cutpointset_items[i][0]} ({cutpointset_items[i][1]}) cannot be greater than the percentage of {cutpointset_items[i - 1][0]} ({cutpointset_items[i - 1][1]}).')
+                                    break
                             except ValueError:
                                 utils.default_popup(f'The percentage for {cutpointset_items[i][0]} must be a number.')
                                 break

@@ -18,15 +18,18 @@ class Schedule:
     def _calc_projected_gpa(self) -> float:
         """returns the projected gpa based on course grades and the past gpa"""
         temp_gpa = self.current_gpa
+        temp_units = self.current_units
         for c in self.courses:
-            temp_gpa = self._add_one_course_to_gpa(c, temp_gpa)
+            temp_gpa = self._add_one_course_to_gpa(c, temp_gpa, temp_units)
+            temp_units += c.units
         return temp_gpa
 
-    def _add_one_course_to_gpa(self, c: course.Course, gpa: float) -> float:
+    def _add_one_course_to_gpa(self, c: course.Course, gpa: float, cunits: float = None) -> float:
         """returns the gpa with one course added"""
         if c.p_np:
             return gpa
-        return gpa if c.letter_grade() == 'N/A' else gpa * (self.current_units / (self.current_units + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (self.current_units + c.units))
+        if cunits is None: cunits = self.current_units
+        return gpa if c.letter_grade() == 'N/A' else gpa * (cunits / (cunits + c.units)) + utils.to_gpa(c.letter_grade()) * (c.units / (cunits + c.units))
 
     # public functions
 

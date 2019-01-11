@@ -9,6 +9,8 @@ class UniGrades(App):
     def build(self):
         return MainScreen()
 
+#CHANGING A COURSE FROM PNP TO NOT PNP CRASHES
+
 class MainScreen(ScreenManager):
     def __init__(self, **kwargs):
         ScreenManager.__init__(self, **kwargs)

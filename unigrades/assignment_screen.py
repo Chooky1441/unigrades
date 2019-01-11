@@ -43,11 +43,17 @@ class AssignmentScreen(Screen):
             if self.ids.checkbox_graded.active:
                 try:
                     pts_rec_f = float(self._pts_rec)
+                    if pts_rec_f < 0:
+                        utils.default_popup('Points recieved must be greater than 0.')
+                        return
                 except ValueError:
                     utils.default_popup('Points recieved must be a number.')
                     return
             try:
                 pts_total_f = float(self._pts_total)
+                if pts_total_f < 0:
+                    utils.default_popup('Poins total must be greater than 0.')
+                    return
             except ValueError:
                 utils.default_popup('Points total must be a number.')
             else:
