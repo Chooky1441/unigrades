@@ -98,11 +98,12 @@ class CourseScreen(Screen):
                                                      float(self._dplus), float(self._d), float(self._dminus))
 
                             cats = [] if self._course is None else self._course.categories
-
-                            utils.SCREENS['schedule_screen'].add_course(course.Course(name, units_f, cps, cats, self.ids.checkbox_pnp.active))
+                            c = course.Course(name, units_f, cps, cats, self.ids.checkbox_pnp.active)
+                            utils.SCREENS['schedule_screen'].add_course(c)
                             screen = 'schedule_screen'
                             if self._course is not None:
                                 utils.SCREENS['schedule_screen'].remove_course(self._course)
+                                utils.SCREENS['course_view_screen'].init(c)
                                 self._course = None
                                 screen = 'course_view_screen'
 

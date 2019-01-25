@@ -39,7 +39,7 @@ class CreateSchedule(Screen):
     def create(self) -> None:
         name = self._name.strip()
         if name != '':                                                      # if the name is not empty space or just spaces
-            if name not in utils.SCREENS['home_screen'].sch_names:          # it a schedule of that name does not already exist
+            if self._schedule is not None or name not in utils.SCREENS['home_screen'].sch_names:          # it a schedule of that name does not already exist
                 gpa_f = 0
                 try:                                                        # make sure the GPA is a number
                     gpa_f = float(self._gpa)

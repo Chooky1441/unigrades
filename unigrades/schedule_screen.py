@@ -14,10 +14,10 @@ class ScheduleScreen(Screen):
 
     def init(self, schedule):
         """whenever a schedule is loaded this must be called so the screen can be updated"""
+        self._schedule = schedule
         if self._course_buttons != dict():
             for c in self._schedule.courses:
                 self.remove_course_button(c, False)
-        self._schedule = schedule
         self.ids.schedule_name.text = self._schedule.name
         self.ids.current_gpa.text = f'Current GPA: {round(self._schedule.current_gpa, 2)}'
         self.ids.current_units.text = f'Completed Units: {self._schedule.current_units}'
@@ -77,6 +77,7 @@ class ScheduleScreen(Screen):
     def remove_course(self, c: course.Course) -> None:
         """removes the course from the schedule and updates the relevant info on the screen"""
         self._schedule.remove_course(c)
+        self._schedule.save()
         self.update_view_height()
         self.remove_course_button(c)
         self.ids.projected_gpa.text = f'Projected GPA: {round(self._schedule.projected_gpa, 2)}'

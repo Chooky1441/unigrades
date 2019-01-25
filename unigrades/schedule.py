@@ -39,7 +39,7 @@ class Schedule:
         self.projected_units += c.units
 
     def remove_course(self, c: course.Course):
-        """removes the course from the schedule, removing any relecant information"""
+        """removes the course from the schedule, removing any relevant information"""
         self.courses.remove(c)
         self.projected_gpa = self._calc_projected_gpa()
         self.projected_units -= c.units
