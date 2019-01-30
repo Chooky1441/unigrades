@@ -1,0 +1,5 @@
+open up UniGrades for Windows in cmd, run:
+	py -m PyInstaller UniGrades.spec 
+
+then open up NSIS Quick Setup, put in all the info
+put the exe for the executable and the dest/UniGrades as the proj dir

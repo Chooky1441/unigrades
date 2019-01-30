@@ -108,6 +108,8 @@ class Category:
 
     def grade(self) -> float:
         """returns the percentage (out of 100) recieved in this catagory"""
+        if len([a for a in self.assignments if a.is_graded()]) == 0:
+            return None
         return None if len(self.assignments) == 0 else sum([a.percent() for a in self.assignments if a.is_graded()]) / len(self.assignments)
 
     def to_dict(self) -> dict:

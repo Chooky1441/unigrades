@@ -1,1 +1,0 @@
-{"name": "asd", "current_gpa": 1.0, "current_units": 1, "courses": [{"name": "a", "units": 4.0, "cutpointset": {"a": 93.5, "aminus": 90.0, "bplus": 86.5, "b": 83.5, "bminus": 80.0, "cplus": 76.5, "c": 73.5, "cminus": 70.0, "dplus": 66.5, "d": 63.5, "dminus": 60.0}, "categories": [{"name": "General", "weight": 100, "assignments": []}], "p_np": false}]}

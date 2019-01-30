@@ -36,8 +36,10 @@ class CategoryEditScreen(Screen):
         def del_button_func(*args):
             def yes_func():
                 self._course.del_category(c)
+                print('removing', c.name)
                 utils.SCREENS['schedule_screen']._schedule.projected_gpa = utils.SCREENS['schedule_screen']._schedule._calc_projected_gpa()
-                self.ids.cat_edit_box.remove_widget(self._category_layouts[c.name])
+                utils.SCREENS['schedule_screen']._schedule.projected_gpa = utils.SCREENS['schedule_screen']._schedule.save()
+                self.ids.cat_edit_box.remove_widget(fl)
                 self.update_cat_box_height()
 
             utils.yesno_popup(f'Are you sure you want to delete "{c.name}"?  Any assignments left in the category will also be removed.', yes_func)
