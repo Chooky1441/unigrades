@@ -80,7 +80,7 @@ class Assignment:
 
     def percent(self) -> float:
         """returns the percent grade recieved"""
-        return (self.pts_rec / self.pts_total) * 100
+        return 100 if self.pts_total == 0 else (self.pts_rec / self.pts_total) * 100
 
     def is_graded(self) -> bool:
         """returns true if the assignment has a grade"""

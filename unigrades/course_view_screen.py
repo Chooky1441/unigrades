@@ -49,12 +49,14 @@ class CourseViewScreen(Screen):
         edit_bttn = Button(text = 'Edit', size_hint = (0.35, 0.4), pos_hint = {'x': 0.6, 'y': 0.50}, on_release = edit_assign)
 
         def del_assign(*args):
-            self.ids.assignment_box.remove_widget(self._assign_layouts[a.name])
-            del self._assign_layouts[a.name]
-            self._course.del_assignment(a)
-            utils.SCREENS['schedule_screen']._schedule.projected_gpa = utils.SCREENS['schedule_screen']._schedule._calc_projected_gpa()
-            self.ids.lbl_grade.text = self._grade_str()
-            self.update_assign_box_height()
+            def yes_func():
+                self.ids.assignment_box.remove_widget(self._assign_layouts[a.name])
+                del self._assign_layouts[a.name]
+                self._course.del_assignment(a)
+                utils.SCREENS['schedule_screen']._schedule.projected_gpa = utils.SCREENS['schedule_screen']._schedule._calc_projected_gpa()
+                self.ids.lbl_grade.text = self._grade_str()
+                self.update_assign_box_height()
+            utils.yesno_popup('Are you sure you want to delete this assignment?', yes_func)
 
         delete_bttn = Button(text = 'Delete', size_hint = (0.35, 0.4), pos_hint = {'x': 0.6, 'y': 0.05}, on_release = del_assign)
         fl.add_widget(name_lbl)
